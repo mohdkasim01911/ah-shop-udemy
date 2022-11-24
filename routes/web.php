@@ -48,7 +48,7 @@ route::post('update_password',[AdminController::class,'update_password'])->name(
 //brand controller
 route::get('brand',[BrandController::class,'index'])->name('admin.brand');
 route::post('brand/store',[BrandController::class,'store'])->name('admin.brand.store');
-route::post('brand/edit/{id}',[BrandController::class,'edit'])->name('admin.brand.edit');
+route::post('brand/edit/{id}',[BrandController::class,'edit_brand'])->name('admin.brand.edit');
 
 });
 
