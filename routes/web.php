@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\front\IndexController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Models\user;
 
 /*
@@ -33,13 +34,22 @@ Route::middleware(['auth:sanctum,admin',config('jetstream.auth_session'),'verifi
 
 
 //admin route
-route::get('admin/logout',[AdminController::class,'destroy'])->name('admin.logout');
-route::get('admin/profile',[AdminController::class,'profile'])->name('admin.profile');
-route::get('admin/edit-profile',[AdminController::class,'editProfile'])->name('admin.editProfile');
-route::post('admin/updateprofile',[AdminController::class,'updateprofile'])->name('admin.update_profile');
-route::get('admin/change_password',[AdminController::class,'change_password'])->name('admin.change_password');
-route::post('admin/update_password',[AdminController::class,'update_password'])->name('admin.update_password');
 
+Route::prefix('admin/')->group(function(){
+
+route::get('logout',[AdminController::class,'destroy'])->name('admin.logout');
+route::get('profile',[AdminController::class,'profile'])->name('admin.profile');
+route::get('edit-profile',[AdminController::class,'editProfile'])->name('admin.editProfile');
+route::post('updateprofile',[AdminController::class,'updateprofile'])->name('admin.update_profile');
+route::get('change_password',[AdminController::class,'change_password'])->name('admin.change_password');
+route::post('update_password',[AdminController::class,'update_password'])->name('admin.update_password');
+
+
+//brand controller
+route::get('brand',[BrandController::class,'index'])->name('admin.brand');
+route::post('brand/store',[BrandController::class,'store'])->name('admin.brand.store');
+
+});
 
 });
 
@@ -60,5 +70,5 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'
     Route::get('/dashboard', function () {
         $user = user::find(Auth::user()->id);
         return view('dashboard',compact('user'));
-    })->name('dashboard');
+    })->name('uer.dashboard');
 });
