@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\front\IndexController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Models\user;
 
 /*
@@ -48,7 +50,37 @@ route::post('update_password',[AdminController::class,'update_password'])->name(
 //brand controller
 route::get('brand',[BrandController::class,'index'])->name('admin.brand');
 route::post('brand/store',[BrandController::class,'store'])->name('admin.brand.store');
-route::post('brand/edit/{id}',[BrandController::class,'edit_brand'])->name('admin.brand.edit');
+route::get('brand/edit/{id}',[BrandController::class,'edit_brand'])->name('admin.brand.edit');
+route::post('brand/update/{id}',[BrandController::class,'update_brand'])->name('admin.brand.update');
+route::get('brand/delete/{id}',[BrandController::class,'delete_brand'])->name('admin.brand.delete');
+
+// category all route
+
+
+    route::prefix('category/')->group(function(){
+
+        route::get('view',[CategoryController::class,'index'])->name('category.list');
+         route::get('add',[CategoryController::class,'add'])->name('category.add');
+        route::post('store',[CategoryController::class,'store'])->name('category.store');
+        route::get('edit/{id}',[CategoryController::class,'edit_category'])->name('category.edit');
+        route::post('update',[CategoryController::class,'update_category'])->name('category.update');
+        route::get('delete/{id}',[CategoryController::class,'delete_category'])->name('category.delete');
+
+    });
+
+    // category all route
+
+
+    route::prefix('subcategory/')->group(function(){
+
+        route::get('view',[SubCategoryController::class,'index'])->name('subcategory.list');
+         route::get('add',[SubCategoryController::class,'add'])->name('subcategory.add');
+        route::post('store',[SubCategoryController::class,'store'])->name('subcategory.store');
+        route::get('edit/{id}',[SubCategoryController::class,'edit_category'])->name('subcategory.edit');
+        route::post('update',[SubCategoryController::class,'update_category'])->name('subcategory.update');
+        route::get('delete/{id}',[SubCategoryController::class,'delete_category'])->name('subcategory.delete');
+
+    });
 
 });
 

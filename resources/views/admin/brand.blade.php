@@ -16,6 +16,7 @@
 					  <table id="example5" class="table table-bordered table-striped" style="width:100%">
 						<thead>
 							<tr>
+								<th>No.</th>
 								<th>Brand En</th>
 								<th>Brand Hin</th>
 								<th>Image</th>
@@ -23,12 +24,18 @@
 							</tr>
 						</thead>
 						<tbody>
+							 @php $i = 1; @endphp
+						  @foreach($brand as $brands)
 							<tr>
-								<td>Tiger Nixon</td>
-								<td>System Architect</td>
-								<td>Edinburgh</td>
-								<td>61</td>
+								<td>{{$i++}}</td>
+								<td>{{$brands->brand_name_en}}</td>
+								<td>{{$brands->brand_name_hin}}</td>
+								<td><img src="{{asset($brands->brand_image)}}" style="width:50px;height:50px"></td>
+								<td><a href="{{route('admin.brand.edit',$brands->id)}}" class="btn btn-primary mb-5"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                    <a href="{{route('admin.brand.delete',$brands->id)}}" class="btn btn-danger mb-5 delete"><i class="fa fa-remove" aria-hidden="true"></i></a>
+								</td>
 							</tr>
+							@endforeach
 						</tbody>
 					</table>
 					</div>
@@ -57,7 +64,10 @@
 							<div class="form-group">
 								<h5>Brand Name English<span class="text-danger">*</span></h5>
 								<div class="controls">
-									<input type="text" name="bne" class="form-control" required="" data-validation-required-message="This field is required"> <div class="help-block"></div></div>
+									<input type="text" name="bne" class="form-control"data-validation-required-message="This field is required"> <div class="help-block"></div></div>
+									@error('bne')
+									  <div class="text-danger">{{ $message }}</div>
+									@enderror
 							</div>
 						</div>
 
@@ -65,7 +75,10 @@
 							<div class="form-group">
 								<h5>Brand Name Hindi <span class="text-danger">*</span></h5>
 								<div class="controls">
-									<input type="text" name="bnh" class="form-control" required="" data-validation-required-message="This field is required"> <div class="help-block"></div></div>
+									<input type="text" name="bnh" class="form-control"data-validation-required-message="This field is required"> <div class="help-block"></div></div>
+									@error('bnh')
+									  <div class="text-danger">{{ $message }}</div>
+									@enderror
 							</div>
 						</div>
 
@@ -74,11 +87,14 @@
 								<h5>Image <span class="text-danger">*</span></h5>
 								<div class="controls">
 									<input type="file" name="image" class="form-control"> <div class="help-block"></div></div>
+									@error('image')
+									  <div class="text-danger">{{ $message }}</div>
+									@enderror
 							</div>
 						</div>
 						<div class="col-12">
 							<div class="form-group">
-							   <button type="submit" class="btn btn-rounded btn-primary">Add Brand</button>
+							   <input type="submit" name="submit" class="btn btn-rounded btn-primary" value="Add Brand">
 						  </div>
 						</div>       
 					  </div>

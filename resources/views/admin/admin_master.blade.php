@@ -60,6 +60,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
  <script src="{{asset('backend/../assets/vendor_components/datatable/datatables.min.js')}}"></script>
  <script src="{{asset('backend/js/pages/data-table.js')}}"></script>
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
         @if(Session::has('message'))
@@ -98,6 +99,38 @@
                 toastr.warning("{{ session('warning') }}");
         @endif
       </script>  
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+ $(function(){
+    
+    $(document).on('click','.delete',function(e){
+       e.preventDefault();
+       var link = $(this).attr('href');
+
+       swal({
+          title: "Are you sure?",
+          text: "Once deleted, you will not be able to recover this imaginary file!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location.href = link
+            swal("Poof! Your imaginary file has been deleted!", {
+              icon: "success",
+            });
+          }
+        });
+ 
+
+
+    });
+ });
+</script>
 	
 	
 </body>
