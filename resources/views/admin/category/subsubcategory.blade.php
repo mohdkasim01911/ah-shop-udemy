@@ -8,8 +8,8 @@
 
 			 <div class="box">
 				<div class="box-header with-border">
-				  <h3 class="box-title">All SubCategory</h3>
-				  <a href="{{route('subcategory.add')}}" class="btn btn-primary" style="float:right;">Add Sub Category</a>
+				  <h3 class="box-title">All Sub->SubCategory</h3>
+				  <a href="{{route('subsubcategory.add')}}" class="btn btn-primary" style="float:right;">Add Sub Category</a>
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
@@ -19,6 +19,7 @@
 							<tr>
 								<th>No.</th>
 								<th>Category Name</th>
+								<th>SubCategory Name</th>
 								<th>Sub Category En</th>
 								<th>Sub Category Hin</th>
 								<th>Action</th>
@@ -26,12 +27,13 @@
 						</thead>
 						<tbody>
 							 @php $i = 1; @endphp
-						  @foreach($subcat as $category)
+						  @foreach($subsubcat as $category)
 							<tr>
 								<td>{{$i++}}</td>
 								<td>{{$category->category->cat_name_en}}</td>
-								<td>{{$category->subcat_name_en}}</td>
-								<td>{{$category->subcat_name_hin}}</td>
+								<td>{{$category->subcategory->subcat_name_en}}</td>
+								<td>{{$category->subsubcategory_name_en}}</td>
+								<td>{{$category->subsubcategory_name_hin}}</td>
 								<td><a href="{{route('subcategory.edit',$category->id)}}" class="btn btn-primary mb-5"><i class="fa fa-edit" aria-hidden="true"></i></a>
                     <a href="{{route('subcategory.delete',$category->id)}}" class="btn btn-danger mb-5 delete"><i class="fa fa-remove" aria-hidden="true"></i></a>
 								</td>

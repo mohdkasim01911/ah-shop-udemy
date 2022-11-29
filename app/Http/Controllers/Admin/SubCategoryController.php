@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\admin\Category;
 use App\Models\admin\SubCategory;
+use App\Models\admin\SubsubCategory;
 
 class SubCategoryController extends Controller
 {
@@ -100,5 +101,53 @@ class SubCategoryController extends Controller
         ];
 
         return redirect()->route('subcategory.list')->with($notification);
+    }
+
+
+    // sub sub category function start
+
+    public function subsubcategory()
+    {
+        $subsubcat = SubsubCategory::all();
+
+        return view('admin.category.subsubcategory',compact('subsubcat'));
+    }
+
+    public function subsubcategorystore()
+    {    
+        $category = Category::orderBy('cat_name_en','ASC')->get();
+        return view('admin.category.addsubsubcategory',compact('category'));
+    }
+
+    public function ajaxsubcategory($category_id){
+       $subcat = SubCategory::where('category_id',$category_id)->orderBy('subcat_name_en','ASC')->get();
+       return json_encode($subcat);
+    }
+
+    public function sub_subcat_store(Request $request)
+    {
+         $request->validate([
+                 'category_id' =>'required',
+                 'subcategory_id' =>'required',
+                 'subcaten' =>'required',
+                 'subcateh' =>'required',
+           ]);
+
+        SubsubCategory::insert([
+         'category_id' => $request->category_id,
+         'subcategory_id' => $request->subcategory_id,
+         'subsubcategory_name_hin' => $request->subcateh,
+         'subsubcategory_name_en' => $request->subcaten,
+         'subsubcategory_slug_hin' => strtolower(str_replace(' ','-',$request->subcaten)), 
+         'subsubcategory_slug_en' => str_replace(' ','-',$request->subcateh),       
+        ]);
+
+        $notification = [
+         
+           'message' => 'Sub->SubCategory Inserted SuccessFully',
+           'alert-type' => 'success'
+        ];
+
+        return redirect()->route('subsubcategory.list')->with($notification);
     }
 }

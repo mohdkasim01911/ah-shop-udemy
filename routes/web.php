@@ -82,6 +82,15 @@ route::get('brand/delete/{id}',[BrandController::class,'delete_brand'])->name('a
 
     });
 
+   //subsubcategory route
+
+     route::prefix('subsubcategory/')->group(function(){
+        route::get('view',[SubCategoryController::class,'subsubcategory'])->name('subsubcategory.list');
+        route::get('add',[SubCategoryController::class,'subsubcategorystore'])->name('subsubcategory.add');
+        route::get('category/ajax/{category_id}',[SubCategoryController::class,'ajaxsubcategory']);
+        route::post('add/store',[SubCategoryController::class,'sub_subcat_store'])->name('subsubcategory.store');
+     });
+
 });
 
 });

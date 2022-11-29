@@ -3,6 +3,7 @@
    $prefix = Request::route()->getPrefix();
    $route  = Route::current()->getname();
 
+
 @endphp
 
 <aside class="main-sidebar">
@@ -44,7 +45,7 @@
           </ul>
         </li> 
 		  
-        <li class="treeview">
+        <li class="treeview {{($prefix == 'admin/category' || $prefix == 'admin/subcategory')?'active' :''}}">
           <a href="#">
             <i data-feather="mail"></i> <span>Category</span>
             <span class="pull-right-container">
@@ -53,7 +54,9 @@
           </a>
           <ul class="treeview-menu">
             <li class="{{($route == 'category.list' || $route == 'category.add')? 'active' :''}}"><a href="{{route('category.list')}}"><i class="ti-more"></i>All Category</a></li>
-            <li class="{{($route == 'category.list' || $route == 'category.add')? 'active' :''}}"><a href="{{route('subcategory.list')}}"><i class="ti-more"></i>All SubCategory</a></li>
+            <li class="{{($route == 'subcategory.list' || $route == 'subcategory.add')?'active' :''}}"><a href="{{route('subcategory.list')}}"><i class="ti-more"></i>All SubCategory</a></li>
+
+            <li class="{{($route == 'subsubcategory.list' || $route == 'subsubcategory.add')?'active' :''}}"><a href="{{route('subsubcategory.list')}}"><i class="ti-more"></i>All Sub->SubCategory</a></li>
           </ul>
         </li>
 		
