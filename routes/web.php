@@ -89,6 +89,12 @@ route::get('brand/delete/{id}',[BrandController::class,'delete_brand'])->name('a
         route::get('add',[SubCategoryController::class,'subsubcategorystore'])->name('subsubcategory.add');
         route::get('category/ajax/{category_id}',[SubCategoryController::class,'ajaxsubcategory']);
         route::post('add/store',[SubCategoryController::class,'sub_subcat_store'])->name('subsubcategory.store');
+
+        route::get('edit/{id}',[SubCategoryController::class,'sub_subcat_edit']);
+         
+          route::post('update/{id}',[SubCategoryController::class,'sub_subcat_update']);
+
+        route::get('delete/{id}',[SubCategoryController::class,'sub_subcat_delete']);
      });
 
 });

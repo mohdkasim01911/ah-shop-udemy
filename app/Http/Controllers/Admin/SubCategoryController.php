@@ -150,4 +150,51 @@ class SubCategoryController extends Controller
 
         return redirect()->route('subsubcategory.list')->with($notification);
     }
+
+    public function sub_subcat_edit($id)
+    { 
+       $category = Category::orderBy('cat_name_en','ASC')->get();
+       $SubsubCategory = SubsubCategory::where('id',$id)->first();
+       return view('admin.category.subsubcatedit',compact('category','SubsubCategory'));
+    }
+
+    public function sub_subcat_update(Request $request, $id)
+    { 
+     $request->validate([
+                 'category_id' =>'required',
+                 'subcategory_id' =>'required',
+                 'subcaten' =>'required',
+                 'subcateh' =>'required',
+           ]);
+
+        SubsubCategory::findOrFail($id)->update([
+         'category_id' => $request->category_id,
+         'subcategory_id' => $request->subcategory_id,
+         'subsubcategory_name_hin' => $request->subcateh,
+         'subsubcategory_name_en' => $request->subcaten,
+         'subsubcategory_slug_hin' => strtolower(str_replace(' ','-',$request->subcaten)), 
+         'subsubcategory_slug_en' => str_replace(' ','-',$request->subcateh),       
+        ]);
+
+        $notification = [
+         
+           'message' => 'Sub->SubCategory Inserted SuccessFully',
+           'alert-type' => 'success'
+        ];
+
+        return redirect()->route('subsubcategory.list')->with($notification);
+    }
+
+    public function sub_subcat_delete($id)
+    {
+         SubsubCategory::findOrFail($id)->delete();
+
+           $notification = [
+         
+           'message' => 'Sub->SubCategory Inserted SuccessFully',
+           'alert-type' => 'success'
+        ];
+
+        return redirect()->route('subsubcategory.list')->with($notification);
+    }
 }

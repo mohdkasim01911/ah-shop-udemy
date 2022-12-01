@@ -34,8 +34,8 @@
 								<td>{{$category->subcategory->subcat_name_en}}</td>
 								<td>{{$category->subsubcategory_name_en}}</td>
 								<td>{{$category->subsubcategory_name_hin}}</td>
-								<td><a href="{{route('subcategory.edit',$category->id)}}" class="btn btn-primary mb-5"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                    <a href="{{route('subcategory.delete',$category->id)}}" class="btn btn-danger mb-5 delete"><i class="fa fa-remove" aria-hidden="true"></i></a>
+								<td><a href="{{url('admin/subsubcategory/edit/'.$category->id)}}" class="btn btn-primary mb-5"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                    <a href="{{url('admin/subsubcategory/delete/'.$category->id)}}" class="btn btn-danger mb-5 delete"><i class="fa fa-remove" aria-hidden="true"></i></a>
 								</td>
 							</tr>
 							@endforeach
