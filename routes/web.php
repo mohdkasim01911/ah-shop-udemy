@@ -6,6 +6,7 @@ use App\Http\Controllers\front\IndexController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Models\user;
 
 /*
@@ -96,6 +97,19 @@ route::get('brand/delete/{id}',[BrandController::class,'delete_brand'])->name('a
 
         route::get('delete/{id}',[SubCategoryController::class,'sub_subcat_delete']);
      });
+
+
+      route::prefix('product/')->group(function(){
+
+        route::get('add-product',[ProductController::class,'addProduct'])->name('product-add');
+
+        route::get('subsubcategory/ajax/{subcategory_id}',[SubCategoryController::class,'ajaxsubsubcategory']);
+        route::post('/add',[ProductController::class,'store'])->name('addproduct');
+        route::get('/view',[ProductController::class,'view_product'])->name('manage.product');
+        route::get('/edit/{id}',[ProductController::class,'edit_product'])->name('product.edit');
+        route::post('/update/{id}',[ProductController::class,'update_product'])->name('updateproduct');
+
+    });
 
 });
 

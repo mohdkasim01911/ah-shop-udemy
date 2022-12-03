@@ -62,6 +62,15 @@
  <script src="{{asset('backend/js/pages/data-table.js')}}"></script>
  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+ <!-- taginput -->
+
+ <script src="{{asset('backend/../assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.js')}}"></script>
+
+<!-- // check editor -->
+ <script src="{{asset('backend/../assets/vendor_components/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{asset('backend/../assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js')}}"></script>
+    <script src="{{asset('backend/js/pages/editor.js')}}"></script>
+
 <script>
         @if(Session::has('message'))
         toastr.options =
