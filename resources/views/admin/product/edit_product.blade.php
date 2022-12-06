@@ -16,7 +16,7 @@
 	<div class="box-body">
 	  <div class="row">
 		<div class="col">
-			<form method="post" action="{{route('updateproduct',$product->id)}}" enctype="multipart/form-data" autocomplete="off">
+			<form method="post" action="{{route('updateproduct',$product->id)}}" autocomplete="off" enctype="multipart/form-data">
 				@csrf
 			  <div class="row">
 				<div class="col-12">
@@ -180,7 +180,7 @@
 
 
 					 <div class="row">
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<div class="form-group">
 							   <h5>Product Discount Price<span class="text-danger">*</span></h5>
 								<div class="controls">
@@ -188,22 +188,13 @@
 								</div>
 						    </div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<div class="form-group">
 								<h5>Product Thumbnail<span class="text-danger">*</span></h5>
 								<div class="controls">
 									<input type="file" name="product_thambnail" class="form-control" onchange="mainThamurl(this)">
 								</div>
 								<img src="" id="mainThmb">
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<h5>Product Multi Image<span class="text-danger">*</span></h5>
-								<div class="controls">
-									<input type="file" name="photo_name[]" class="form-control" multiple="" id="multiImg">
-								</div>
-								<div class="row" id="preview_img"></div>
 							</div>
 						</div>
 					</div> <!-- Row 5th -->
@@ -298,6 +289,72 @@
 
 </section>
 <!-- /.content -->
+
+
+<!-- Multi image update -->
+
+<section class="content">
+	<div class="row">
+    
+     <div class="col-md-12">
+				<div class="box bt-3 border-info">
+				  <div class="box-header">
+					<h4 class="box-title">Product Image<strong>Update</strong></h4>
+				  </div>
+        
+           <form method="post" action="{{route('image.update')}}" enctype="multipart/form-data">
+           	@csrf
+             <div class="row row-sm">
+             	@foreach($multiimage as $img)
+             	 <div class="col-md-3">
+             	 	  <div class="card">
+									  <img class="card-img-top" src="{{asset($img->photo_name)}}" style="width:200px;height:200px" >
+									  <div class="card-body">
+									    <h5 class="card-title">
+									    	<a href="#" class="btn btn-sm btn-danger delete" title="Delete-Data"><i class="fa fa-trash"></i></a>
+									    </h5>
+									    <p class="card-text">
+									    	<div class="form-group">
+									    		 <label class="form-control-label">Change Images<span class="text-danger">*</span></label>
+									    		 <input type="file" name="multi_img[ {{$img->id
+									    		 }} ]" class="form-control">
+									    	</div>
+									    </p>
+									  </div>
+									</div>
+             	 </div>
+             	@endforeach
+             </div>
+             <div class="text-xs-right">
+             	 <input type="submit" class="btn btn-rounded btn-primary mb-5" value="Update Image">
+             </div>
+           	
+           </form> 
+       
+				   
+			  </div>
+		 </div>
+
+
+	</div>
+</section>
+
+
+
+
+
+
+
+
+<!-- multi image update end -->
+
+
+
+
+
+
+
+
 </div>
 
     <script type="text/javascript">

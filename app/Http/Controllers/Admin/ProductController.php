@@ -16,6 +16,8 @@ use Image;
 
 class ProductController extends Controller
 {
+
+
     public function addProduct()
     {    
         $categorys = Category::latest()->get();
@@ -105,12 +107,58 @@ class ProductController extends Controller
        $subcategorys = SubCategory::latest()->get();
        $subsubcategory = SubsubCategory::latest()->get(); 
        $product = Product::findOrFail($id);
+       $multiimage = multiimage::where('product_id',$id)->get();
 
-       return view('admin.product.edit_product',compact('brands','categorys','subcategorys','subsubcategory','product'));
+       return view('admin.product.edit_product',compact('brands','categorys','subcategorys','subsubcategory','product','multiimage'));
     }
 
     public function update_product(Request $request, $id)
     {
+
+            if($request->file('product_thambnail')){
+
+                 $imgess = Product::findOrFail($id);
+                
+                  unlink($imgess->product_thambnail);
+
+                $image = $request->file('product_thambnail');
+                $filename = hexdec(uniqid()).'.'.$image->getClientOriginalName();
+                Image::make($image)->resize(917,1000)->save('upload/products/thumbnails/'.$filename);
+                $save_url = 'upload/products/thumbnails/'.$filename;
+
+                product::findOrFail($id)->update([
+
+              'brand_id' => $request->brand_id,
+              'category_id' => $request->category_id,
+              'subcategory_id' => $request->subcategory_id,
+              'subsubcategory_id' => $request->subsubcategory_id,
+              'product_name_en' => $request->product_name_en,
+              'product_name_hin' => $request->product_name_hin,
+              'product_slug_en' => strtolower(str_replace(' ','-',$request->product_name_en)),
+              'product_slug_hin' => str_replace(' ','-',$request->product_name_hin),
+              'product_code' => $request->product_code,
+              'product_qty' => $request->product_qty,
+              'product_tags_en' => $request->product_tags_en,
+              'product_tags_hin' => $request->product_tags_hin,
+              'product_size_en' => $request->product_size_en,
+              'product_size_hin' => $request->product_size_hin,
+              'product_color_en' => $request->product_color_en,
+              'product_color_hin' => $request->product_color_hin,
+              'product_selling_price' => $request->product_selling_price,
+              'product_discont_price' => $request->product_discont_price,
+              'short_desc_en' => $request->short_desc_en,
+              'short_desc_hin' => $request->short_desc_hin,
+              'long_desc_en' => $request->long_desc_en,
+              'long_desc_hin' => $request->long_desc_hin,
+              'hot_deals' => $request->hot_deals,
+              'featured' => $request->featured,
+              'special_offer' => $request->special_offer,
+              'special_deals' => $request->special_deals,
+              'created_at' => Carbon::now(),
+              'product_thambnail' => $save_url,
+              'status' => 1,
+         ]);
+         }else{
            product::findOrFail($id)->update([
 
               'brand_id' => $request->brand_id,
@@ -143,6 +191,8 @@ class ProductController extends Controller
               'status' => 1,
          ]);
 
+        }
+
            $notification = [
          
            'message' => 'Product update SuccessFully',
@@ -152,4 +202,62 @@ class ProductController extends Controller
         return redirect()->route('manage.product')->with($notification);
 
     }
+
+     public function image(Request $request){
+         
+         $imges = $request->multi_img;
+
+         foreach($imges as $key => $img){
+             
+            $imgess = multiimage::findOrFail($key);
+
+            unlink($imgess->photo_name);
+
+            $filename = hexdec(uniqid()).'.'.$img->getClientOriginalName();
+            Image::make($img)->resize(917,1000)->save('upload/products/multimage/'.$filename);
+            $save_url = 'upload/products/multimage/'.$filename;
+
+            multiimage::where('id',$key)->update([
+               'photo_name' => $save_url,
+               'updated_at' => Carbon::now(),   
+            ]);
+
+
+        $notification = [
+         
+           'message' => 'Product image update SuccessFully',
+           'alert-type' => 'success'
+        ];
+
+        return redirect()->back()->with($notification);
+         }
+    }
+
+    public function product_delete($id)
+    {
+       $product = Product::findOrFail($id);
+       
+        unlink($product->product_thambnail);
+
+        Product::findOrFail($id)->delete();
+
+        $images = multiimage::where('product_id',$id)->get();
+
+        foreach($images as $img){
+
+            unlink($img->photo_name);
+
+            multiimage::where('product_id',$id)->delete();
+
+        }
+
+         $notification = [
+         
+           'message' => 'Product delete SuccessFully',
+           'alert-type' => 'success'
+        ];
+
+        return redirect()->route('manage.product')->with($notification);
+
+    } 
 }

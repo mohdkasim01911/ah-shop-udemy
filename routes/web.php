@@ -106,8 +106,15 @@ route::get('brand/delete/{id}',[BrandController::class,'delete_brand'])->name('a
         route::get('subsubcategory/ajax/{subcategory_id}',[SubCategoryController::class,'ajaxsubsubcategory']);
         route::post('/add',[ProductController::class,'store'])->name('addproduct');
         route::get('/view',[ProductController::class,'view_product'])->name('manage.product');
+
         route::get('/edit/{id}',[ProductController::class,'edit_product'])->name('product.edit');
+
         route::post('/update/{id}',[ProductController::class,'update_product'])->name('updateproduct');
+
+        route::post('/image_update',[ProductController::class,'image'])->name('image.update');
+        route::get('/delete/{id}',[ProductController::class,'product_delete'])->name('product.delete');
+
+
 
     });
 
@@ -132,5 +139,5 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'
     Route::get('/dashboard', function () {
         $user = user::find(Auth::user()->id);
         return view('dashboard',compact('user'));
-    })->name('uer.dashboard');
+    })->name('user.dashboard');
 });

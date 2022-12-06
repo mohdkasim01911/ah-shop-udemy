@@ -34,7 +34,7 @@
 								<td>{{$item->product_qty}}</td>
 								<td><img src="{{asset($item->product_thambnail)}}" width="50" height="50"></td>
 								<td><a href="{{route('product.edit',$item->id)}}" class="btn btn-primary mb-5"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                    <a href="{{route('category.delete',$item->id)}}" class="btn btn-danger mb-5 delete"><i class="fa fa-remove" aria-hidden="true"></i></a>
+                    <a href="{{route('product.delete',$item->id)}}" class="btn btn-danger mb-5 delete"><i class="fa fa-remove" aria-hidden="true"></i></a>
 								</td>
 							</tr>
 							@endforeach
