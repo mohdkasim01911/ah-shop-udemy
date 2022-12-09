@@ -6,13 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\user;
+use App\Models\admin\Category;
+use App\Models\admin\Slider;
+use App\Models\admin\Product;
 use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
 {
    public function index()
    {
-     return view('front.index');
+     $sliders = Slider::where('status',1)->orderBy('id','desc')->limit(3)->get();
+     $categorys = Category::orderBy('cat_name_en','ASC')->get();
+     $products  = Product::orderBy('id','DESC')->limit(6)->get();
+     return view('front.index',compact('categorys','sliders','products'));
    }
 
    public function destroy()
@@ -88,5 +94,10 @@ class IndexController extends Controller
          }else{
             return redirect()->back();
          }
+    }
+
+    public function details($id)
+    {
+       return view('front.detail');
     }
 }

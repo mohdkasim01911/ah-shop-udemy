@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Models\user;
 
 /*
@@ -34,6 +35,7 @@ Route::middleware(['auth:sanctum,admin',config('jetstream.auth_session'),'verifi
     Route::get('/admin/dashboard', function () {
         return view('admin.index');
     })->name('dashboard')->middleware('auth:admin');
+});
 
 
 //admin route
@@ -118,9 +120,18 @@ route::get('brand/delete/{id}',[BrandController::class,'delete_brand'])->name('a
 
     });
 
-});
+    route::prefix('slider/')->group(function(){
+      route::get('/view',[SliderController::class,'index'])->name('slider.view');
+      route::get('/add',[SliderController::class,'addshow'])->name('slider.add');
+      route::post('/store',[SliderController::class,'store'])->name('slider.store');
+      route::get('/edit/{id}',[SliderController::class,'edit'])->name('slider.edit');
+      route::post('/update/{id}',[SliderController::class,'update'])->name('slider.update');
+      route::get('/delete/{id}',[SliderController::class,'delete'])->name('slider.delete');
+    });
 
 });
+
+
 
 
 
@@ -131,6 +142,7 @@ route::get('user/profile',[IndexController::class,'profile'])->name('user.profil
 route::post('user/profile/store',[IndexController::class,'update_profile'])->name('user.profile.store');
 route::get('user/change/password',[IndexController::class,'change_password'])->name('change.password');
 route::post('user/update/password',[IndexController::class,'update_password'])->name('user.update.password');
+route::get('product/details/{id}',[IndexController::class,'details'])->name('detail');
 
 
 
