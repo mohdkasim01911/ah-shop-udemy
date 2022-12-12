@@ -9,6 +9,7 @@ use App\Models\user;
 use App\Models\admin\Category;
 use App\Models\admin\Slider;
 use App\Models\admin\Product;
+use App\Models\admin\multiimage;
 use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
@@ -18,7 +19,11 @@ class IndexController extends Controller
      $sliders = Slider::where('status',1)->orderBy('id','desc')->limit(3)->get();
      $categorys = Category::orderBy('cat_name_en','ASC')->get();
      $products  = Product::orderBy('id','DESC')->limit(6)->get();
-     return view('front.index',compact('categorys','sliders','products'));
+     $feature  = Product::where('featured',1)->orderBy('id','DESC')->limit(6)->get();
+     $hot_deals  = Product::where('hot_deals',1)->where('product_discont_price','!=',NUll)->orderBy('id','DESC')->limit(6)->get();
+     $special_offer  = Product::where('special_offer',1)->orderBy('id','DESC')->limit(6)->get();
+     $special_deals  = Product::where('special_deals',1)->orderBy('id','DESC')->limit(6)->get();
+     return view('front.index',compact('categorys','sliders','products','feature','hot_deals','special_offer','special_deals'));
    }
 
    public function destroy()
@@ -96,8 +101,11 @@ class IndexController extends Controller
          }
     }
 
-    public function details($id)
+    public function details($id,$slug)
     {
-       return view('front.detail');
+       $product = Product::findOrFail($id);
+       $multimg = multiimage::where('product_id',$id)->get();
+       return view('front.detail',compact('product','multimg'));
     }
 }
+

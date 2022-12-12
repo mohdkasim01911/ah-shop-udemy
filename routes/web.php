@@ -142,7 +142,7 @@ route::get('user/profile',[IndexController::class,'profile'])->name('user.profil
 route::post('user/profile/store',[IndexController::class,'update_profile'])->name('user.profile.store');
 route::get('user/change/password',[IndexController::class,'change_password'])->name('change.password');
 route::post('user/update/password',[IndexController::class,'update_password'])->name('user.update.password');
-route::get('product/details/{id}',[IndexController::class,'details'])->name('detail');
+route::get('product/details/{id}/{slug}',[IndexController::class,'details']);
 
 
 
