@@ -11,63 +11,9 @@
       <!-- ============================================== SIDEBAR ============================================== -->
       <div class="col-xs-12 col-sm-12 col-md-3 sidebar"> 
         
-        <!-- ================================== TOP NAVIGATION ================================== -->
-        <div class="side-menu animate-dropdown outer-bottom-xs">
-          <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Categories</div>
-          <nav class="yamm megamenu-horizontal">
-            <ul class="nav">
-            @foreach($categorys as $cat)
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-shopping-bag" aria-hidden="true"></i>{{$cat->cat_name_en}}</a>
-                <ul class="dropdown-menu mega-menu">
-                  <li class="yamm-content">
-                    <div class="row">
-                    @php 
-                      $subcategory = App\Models\admin\SubCategory::where('category_id',$cat->id)->orderBy('Subcat_name_en','ASC')->get();
-                    @endphp
-                    @foreach($subcategory as $subcat)
-                      <div class="col-sm-12 col-md-3">
-                        <h2 class="title">{{$subcat->subcat_name_en}}</h2>
-                        @php 
-                          $subsubcategory = App\Models\admin\SubsubCategory::where('subcategory_id',$subcat->id)->orderBy('subsubcategory_name_en','ASC')->get();
-                        @endphp
-                        @foreach($subsubcategory as $subsubcat)
-                        <ul class="links list-unstyled">
-                          <li><a href="#">{{$subsubcat->subsubcategory_name_en}}</a></li>
-                        </ul>
-                        @endforeach
-                      </div>
-                      @endforeach
-                      <!-- /.col --> 
-                    </div>
-                    <!-- /.row --> 
-                  </li>
-                  <!-- /.yamm-content -->
-                </ul>
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-              @endforeach
-              
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-paper-plane"></i>Kids and Babies</a> 
-                <!-- /.dropdown-menu --> 
-              </li>
-              
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-futbol-o"></i>Sports</a> 
-                <!-- ================================== MEGAMENU VERTICAL ================================== --> 
-                <!-- /.dropdown-menu --> 
-                <!-- ================================== MEGAMENU VERTICAL ================================== --> </li>
-              <!-- /.menu-item -->
-              
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-envira"></i>Home and Garden</a> 
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-              
-            </ul>
-            <!-- /.nav --> 
-          </nav>
-          <!-- /.megamenu-horizontal --> 
-        </div>
-        <!-- /.side-menu --> 
-        <!-- ================================== TOP NAVIGATION : END ================================== --> 
+        <!-- ============== TOP NAVIGATION =================== -->
+           @include('front.tags.vartical_menu');
+        <!-- ========= TOP NAVIGATION : END ================= --> 
         
         <!-- ============================================== HOT DEALS ============================================== -->
         <div class="sidebar-widget hot-deals wow fadeInUp outer-bottom-xs">
@@ -195,17 +141,12 @@
         </div>
         <!-- /.sidebar-widget --> 
         <!-- ============================================== SPECIAL OFFER : END ============================================== --> 
+       
         <!-- ============================================== PRODUCT TAGS ============================================== -->
-        <div class="sidebar-widget product-tag wow fadeInUp">
-          <h3 class="section-title">Product tags</h3>
-          <div class="sidebar-widget-body outer-top-xs">
-            <div class="tag-list"> <a class="item" title="Phone" href="category.html">Phone</a> <a class="item active" title="Vest" href="category.html">Vest</a> <a class="item" title="Smartphone" href="category.html">Smartphone</a> <a class="item" title="Furniture" href="category.html">Furniture</a> <a class="item" title="T-shirt" href="category.html">T-shirt</a> <a class="item" title="Sweatpants" href="category.html">Sweatpants</a> <a class="item" title="Sneaker" href="category.html">Sneaker</a> <a class="item" title="Toys" href="category.html">Toys</a> <a class="item" title="Rose" href="category.html">Rose</a> </div>
-            <!-- /.tag-list --> 
-          </div>
-          <!-- /.sidebar-widget-body --> 
-        </div>
-        <!-- /.sidebar-widget --> 
+       @include('front.common.product_tag');
         <!-- ============================================== PRODUCT TAGS : END ============================================== --> 
+
+
         <!-- ============================================== SPECIAL DEALS ============================================== -->
         
         <div class="sidebar-widget outer-bottom-small wow fadeInUp">
@@ -270,37 +211,11 @@
         <!-- /.sidebar-widget --> 
         <!-- ============================================== NEWSLETTER: END ============================================== --> 
         
-        <!-- ============================================== Testimonials============================================== -->
-        <div class="sidebar-widget  wow fadeInUp outer-top-vs ">
-          <div id="advertisement" class="advertisement">
-            <div class="item">
-              <div class="avatar"><img src="{{asset('front/assets/images/testimonials/member1.png')}}" alt="Image"></div>
-              <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-              <div class="clients_author">John Doe <span>Abc Company</span> </div>
-              <!-- /.container-fluid --> 
-            </div>
-            <!-- /.item -->
-            
-            <div class="item">
-              <div class="avatar"><img src="{{asset('front/assets/images/testimonials/member3.png')}}" alt="Image"></div>
-              <div class="testimonials"><em>"</em>Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-              <div class="clients_author">Stephen Doe <span>Xperia Designs</span> </div>
-            </div>
-            <!-- /.item -->
-            
-            <div class="item">
-              <div class="avatar"><img src="{{asset('front/assets/images/testimonials/member2.png')}}" alt="Image"></div>
-              <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-              <div class="clients_author">Saraha Smith <span>Datsun &amp; Co</span> </div>
-              <!-- /.container-fluid --> 
-            </div>
-            <!-- /.item --> 
-            
-          </div>
-          <!-- /.owl-carousel --> 
-        </div>
+        <!-- =================== Testimonials=============== -->
+              
+               @include('front.tags.test_monial');
         
-        <!-- ============================================== Testimonials: END ============================================== -->
+        <!-- =================== Testimonials: END ================== -->
         
         <div class="home-banner"> <img src="{{asset('front/assets/images/banners/LHS-banner.jpg')}}" alt="Image"> </div>
       </div>

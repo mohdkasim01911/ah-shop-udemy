@@ -143,6 +143,7 @@ route::post('user/profile/store',[IndexController::class,'update_profile'])->nam
 route::get('user/change/password',[IndexController::class,'change_password'])->name('change.password');
 route::post('user/update/password',[IndexController::class,'update_password'])->name('user.update.password');
 route::get('product/details/{id}/{slug}',[IndexController::class,'details']);
+route::get('product/tag/{tag}',[IndexController::class,'TagWiseProduct']);
 
 
 
