@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\front\CartController;
 use App\Models\user;
 
 /*
@@ -142,8 +143,20 @@ route::get('user/profile',[IndexController::class,'profile'])->name('user.profil
 route::post('user/profile/store',[IndexController::class,'update_profile'])->name('user.profile.store');
 route::get('user/change/password',[IndexController::class,'change_password'])->name('change.password');
 route::post('user/update/password',[IndexController::class,'update_password'])->name('user.update.password');
+// prduct details route
 route::get('product/details/{id}/{slug}',[IndexController::class,'details']);
+// product tag wise
 route::get('product/tag/{tag}',[IndexController::class,'TagWiseProduct']);
+// product add to card modal
+route::get('/product/view/modal/{id}',[IndexController::class,'productviewajax']);
+//add to card data
+route::post('/cart/data/store/{id}',[CartController::class,'AddToCard']);
+//add to mini cart
+route::get('/product/mini/cart',[CartController::class,'Addminicard']);
+//remove to mini cart
+route::get('/miniCart/product-remove/{id}',[CartController::class,'RemoveMiniCart']);
+
+
 
 
 
