@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\admin\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
+use App\Models\admin\wishlist;
+use Carbon\Carbon;
+use Auth;
+
 class CartController extends Controller
 {
     function AddToCard(Request $request, $id)
@@ -71,5 +75,34 @@ class CartController extends Controller
     {
        Cart::remove($rowId);
        return response()->json(['success' => 'SuccessFully Remove on your card']);
+    }
+
+    public function addToWishlist($product_id)
+    {
+         
+         if(Auth::check())
+         {
+              
+              $exists = wishlist::where('user_id',Auth::id())->where('product_id',$product_id)->first();
+
+              if(!$exists){
+
+                wishlist::insert([
+                  
+                  'user_id' => Auth::id(),
+                  'product_id' => $product_id,
+                  'created_at' => Carbon::now(),
+
+                ]);
+
+                return response()->json(['success'=>'Product Add To WishList']);
+
+              }else{
+                 return response()->json(['error'=>'Product All Ready Exist in WishList']);
+              }
+         }else{
+             return response()->json(['error'=>'First Login Your Account']);
+         }
+
     }
 }

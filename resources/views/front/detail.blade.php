@@ -412,7 +412,7 @@
                   </div>
 
                   <div class="col-sm-7">
-                    <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+                    <button  class="btn btn-primary icon" data-toggle="modal" data-target="#exampleModal" type="button" title="Add Cart" id="{{$product->id}}" onclick="productView(this.id)"> ADD TO CART </button>
                   </div>
 
                   

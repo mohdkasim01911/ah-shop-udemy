@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\front\CartController;
+use App\Http\Controllers\user\WishlistController;
+use App\Http\Controllers\front\CartPageController;
 use App\Models\user;
 
 /*
@@ -156,8 +158,29 @@ route::get('/product/mini/cart',[CartController::class,'Addminicard']);
 //remove to mini cart
 route::get('/miniCart/product-remove/{id}',[CartController::class,'RemoveMiniCart']);
 
+// add to wishlist
+route::post('/add-to-wishlist/{product_id}',[CartController::class,'addToWishlist']);
 
 
+Route::group(['prefix'=>'user','middleware' => ['user','auth'],'namespace'=>'user'],function(){
+
+//Show wishlist Product
+
+route::get('/view/wishlist',[WishlistController::class,'view_wishlist'])->name('wishlist');
+// get wish list data
+route::get('/get-wishlist-product',[WishlistController::class,'getWishlistData']);
+// remove from wishlist
+route::get('/wishlist/product-remove/{id}',[WishlistController::class,'wishlistRemove']);
+
+});
+
+// cart all route here
+
+route::get('/mycart',[CartPageController::class,'mycart'])->name('mycart');
+route::get('/user/get-cart-product',[CartPageController::class,'getCartProduct']);
+route::get('/user/cart/product-remove/{rowId}',[CartPageController::class,'cartRemove']);
+route::get('/cart-increment/{rowId}',[CartPageController::class,'cartIncrement']);
+route::get('/cart-decrement/{rowId}',[CartPageController::class,'cartDecrement']);
 
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'
