@@ -32,6 +32,7 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body class="cnt-home">
 <!-- ============================================== HEADER ============================================== -->
@@ -582,6 +583,13 @@ cart();
                cart();
                miniCart();
 
+                if(data.cartQty <= 0.00){
+                    
+                    $('#coupon_name').val('');
+
+                 $('#coupanField').show();
+                }
+
                 //start message
 
         const Toast = Swal.mixin({
@@ -597,7 +605,8 @@ cart();
                          type : "success",
                          icon: 'success',
                          title : data.success
-                     })
+                     });
+                     coupanCalculation();
                   }else{
                          Toast.fire({
                          type : "error",
@@ -620,6 +629,7 @@ cart();
            url : "/cart-increment/"+rowId,
            dataType : "json",
            success : function(data){
+            coupanCalculation();
               cart();
                miniCart();
            }
@@ -633,6 +643,7 @@ cart();
            url : "/cart-decrement/"+rowId,
            dataType : "json",
            success : function(data){
+            coupanCalculation();
               cart();
                miniCart();
            }
@@ -640,5 +651,159 @@ cart();
     }
 </script>
 <!-- end remove mycart -->
+
+
+<script type="text/javascript">
+    function AddCoupan(){
+        var CoupanName = $('#coupon_name').val();
+
+        $.ajax({
+             type : 'POST',
+             url  : "{{url('/coupan-aply')}}",
+             dataType : 'json',
+             data : {coupan_name : CoupanName},
+             success : function(data){
+
+                coupanCalculation();
+
+                 const Toast = Swal.mixin({
+                      toast : true,
+                      position: 'top-end',
+                      
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                  if($.isEmptyObject(data.error))
+                  {
+                     Toast.fire({
+                         type : "success",
+                         icon: 'success',
+                         title : data.success
+                     });
+                     $('#coupanField').hide();
+                  }else{
+                         Toast.fire({
+                         type : "error",
+                         icon: 'error',
+                         title : data.error
+                     })
+                  }
+
+             }
+        });
+    }
+
+ // coupan calculation
+
+    function coupanCalculation(){
+        $.ajax({
+            type : 'GET',
+            dataType : 'json',
+            url : "{{url('/coupan-calculate')}}",
+            success : function(data){
+
+
+                if(data.total){
+
+                  $('#coupanCalFeild').html(`
+
+                           <tr>
+                     <th>
+                        <div class="cart-sub-total">
+                           Subtotal<span class="inner-left-md">$ ${data.total}</span>
+                        </div>
+                        <div class="cart-grand-total">
+                           Grand Total<span class="inner-left-md">$ ${data.total}</span>
+                        </div>
+                     </th>
+                  </tr>
+
+
+                    `);
+
+
+                }else{
+
+                     $('#coupanCalFeild').html(`
+
+                           <tr>
+                     <th>
+                        <div class="cart-sub-total">
+                           Subtotal<span class="inner-left-md">$ ${data.subtotal}</span>
+                        </div>
+                         <div class="cart-sub-total">
+                           Coupan Name<span class="inner-left-md">${data.coupan_name}</span>
+                           <button type="submit" onclick="coupanRemove()"> <i class="fa fa-times"></i> </button>
+                        </div>
+                        <div class="cart-sub-total">
+                           Discount Amount<span class="inner-left-md">$ ${data.discount_amount}</span>
+                        </div>
+                        <div class="cart-grand-total">
+                           Grand Total<span class="inner-left-md">$ ${data.total_amount}</span>
+                        </div>
+                     </th>
+                  </tr>
+
+
+                    `);
+
+                }
+
+            }
+        });
+    }
+    coupanCalculation();
+</script>
+
+ <!-- // coupan remove-->
+
+ <script>
+      
+      function coupanRemove(){
+
+        $.ajax({
+           
+            type : "GET",
+            url : "{{url('/coupan-remove')}}",
+            dataType : "json",
+            success : function(data){
+
+                 coupanCalculation();
+
+                 $('#coupon_name').val('');
+
+                 $('#coupanField').show();
+
+                 const Toast = Swal.mixin({
+                      toast : true,
+                      position: 'top-end',
+                      
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                  if($.isEmptyObject(data.error))
+                  {
+                     Toast.fire({
+                         type : "success",
+                         icon: 'success',
+                         title : data.success
+                     })
+                  }else{
+                         Toast.fire({
+                         type : "error",
+                         icon: 'error',
+                         title : data.error
+                     })
+                  }
+
+            }
+
+
+        });
+
+      }
+
+ </script>
+
 </body>
 </html>

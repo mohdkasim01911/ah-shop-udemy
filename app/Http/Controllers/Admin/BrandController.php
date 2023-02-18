@@ -103,7 +103,6 @@ class BrandController extends Controller
         ];
 
         return redirect()->route('admin.brand')->with($notification);
-
     }
 
     public function delete_brand($id)

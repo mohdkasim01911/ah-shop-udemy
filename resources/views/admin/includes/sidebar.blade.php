@@ -86,27 +86,59 @@
             <li><a href="{{route('slider.add')}}"><i class="ti-more"></i>Add-slider</a></li>
             <li><a href="{{route('slider.view')}}"><i class="ti-more"></i>Manage Slider</a></li>
           </ul>
-        </li>  		  
+        </li> 
+
+        <li class="treeview">
+          <a href="#">
+            <i data-feather="file"></i>
+            <span>Coupan</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{route('coupan.add')}}"><i class="ti-more"></i>Add-Coupan</a></li>
+            <li><a href="{{route('coupan.view')}}"><i class="ti-more"></i>Manage Coupan</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i data-feather="file"></i>
+            <span>shiping</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{route('shiping.add')}}"><i class="ti-more"></i>Add-Shiping</a></li>
+            <li><a href="{{route('shiping.view')}}"><i class="ti-more"></i>Manage Shiping</a></li>
+            <li><a href="{{route('distric.add')}}"><i class="ti-more"></i>Add Distric</a></li>
+            <li><a href="{{route('distric.view')}}"><i class="ti-more"></i>Manage Distric</a></li>
+            <li><a href="{{route('state.add')}}"><i class="ti-more"></i>Add State</a></li>
+            <li><a href="{{route('state.view')}}"><i class="ti-more"></i>Manage state</a></li>
+          </ul>
+        </li>  
+		  
 		 
         <li class="header nav-small-cap">User Interface</li>
 		  
         <li class="treeview">
           <a href="#">
             <i data-feather="grid"></i>
-            <span>Components</span>
+            <span>Orders</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="components_alerts.html"><i class="ti-more"></i>Alerts</a></li>
-            <li><a href="components_badges.html"><i class="ti-more"></i>Badge</a></li>
-            <li><a href="components_buttons.html"><i class="ti-more"></i>Buttons</a></li>
-            <li><a href="components_sliders.html"><i class="ti-more"></i>Sliders</a></li>
-            <li><a href="components_dropdown.html"><i class="ti-more"></i>Dropdown</a></li>
-            <li><a href="components_modals.html"><i class="ti-more"></i>Modal</a></li>
-            <li><a href="components_nestable.html"><i class="ti-more"></i>Nestable</a></li>
-            <li><a href="components_progress_bars.html"><i class="ti-more"></i>Progress Bars</a></li>
+            <li><a href="{{route('pendding.order')}}"><i class="ti-more"></i>Pendding</a></li>
+            <li><a href="{{route('confirm.order')}}"><i class="ti-more"></i>Confirm</a></li>
+            <li><a href="{{route('proccessing.order')}}"><i class="ti-more"></i>Proccessing</a></li>
+            <li><a href="{{route('picked.order')}}"><i class="ti-more"></i>Picked</a></li>
+            <li><a href="{{route('shipped.order')}}"><i class="ti-more"></i>Shipped</a></li>
+            <li><a href="{{route('delivered.order')}}"><i class="ti-more"></i>Delivered</a></li>
+            <li><a href="{{route('cancel.order')}}"><i class="ti-more"></i>Cancel</a></li>
           </ul>
         </li>
 		

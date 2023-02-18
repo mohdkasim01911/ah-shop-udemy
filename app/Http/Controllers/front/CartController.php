@@ -7,15 +7,23 @@ use Illuminate\Http\Request;
 use App\Models\admin\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
-use App\Models\admin\wishlist;
+use App\Models\admin\{wishlist,Coupan,Distric,shiping,AreaState};
 use Carbon\Carbon;
 use Auth;
+
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
     function AddToCard(Request $request, $id)
     {
+       
+        if(Session::has('coupan')){
+            Session::forget('coupan');
+        }
+
       $product = Product::findOrFail($id);
+
 
       // echo "<pre>";
       // print_r($product);
@@ -105,4 +113,103 @@ class CartController extends Controller
          }
 
     }
+
+    public function CoupanApply(Request $request){
+
+        $coupan = Coupan::where('coupan_name',$request->coupan_name)->where('coupan_validety','>=',Carbon::now()->format('Y-m-d'))->first();
+
+        $cart_total = Cart::total() - Cart::tax();
+
+        if($coupan){
+            
+            Session::put('coupan',[
+                'copan_name' => $coupan->coupan_name,
+                'coupan_discount' => $coupan->coupan_discount,
+                'discount_amount' => round($cart_total * $coupan->coupan_discount/100),
+                'total_amount' => round($cart_total - $cart_total * $coupan->coupan_discount/100),
+
+            ]);
+            return response()->json(array(
+                
+                'success' => 'Coupan Applied SuccessFully'
+ 
+            ));
+
+        }else{
+           return response()->json(['error'=>'Invalid Coupan']);
+        }
+    
+    }
+
+    public function coupanCalculation(){
+
+       if(Session::has('coupan')){
+
+          return response()->json(array(
+ 
+               'subtotal' => Cart::total() - Cart::tax(),
+               'coupan_name' => session()->get('coupan')['copan_name'],
+               'coupan_discount' => session()->get('coupan')['coupan_discount'],
+               'discount_amount' => session()->get('coupan')['discount_amount'],
+               'total_amount' => session()->get('coupan')['total_amount'], 
+          ));
+
+       }else{
+        
+         return response()->json(array(
+           
+            'total' =>  Cart::total() - Cart::tax(),
+
+          ));
+
+
+       }    
+
+
+    }
+
+    public function coupanRemove(){
+        Session::forget('coupan');
+        return response()->json(['success' => 'Coupan Remove SuccessFully']);
+    }
+
+    public function checkoutProcess(){
+
+      if(Auth::check()){
+
+        if(Cart::total() > 0){
+
+            $carts = Cart::content();
+        $cartQty = Cart::count();
+        $cartTotal = Cart::total() - Cart::tax() ;
+
+        $division = shiping::all();
+        $Distric = Distric::all();
+        $AreaState = AreaState::all();
+
+            return view('front.checkout.checkout',compact('carts','cartQty','cartTotal','division','Distric','AreaState'));
+
+        }else{
+
+           $notification = array(
+              'message' => 'Need To Buy Atleast One Product',
+              'alert-type' => 'error'
+           );
+           return redirect()->to('/')->with($notification);
+
+        }
+
+      }else{
+           $notification = array(
+          'message' => 'You Need To Login First',
+          'alert-type' => 'error'
+       );
+       return redirect()->route('login')->with($notification);
+
+      }
+
+    }
+
+   
+
 }
