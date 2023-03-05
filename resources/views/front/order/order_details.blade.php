@@ -160,6 +160,28 @@
                         </tbody>
                     </table>
                 </div>
+
+                @if($orders->status != 'delivered')
+                
+                @else
+                  @php 
+                   $order = App\Models\admin\Order::where('id',$orders->id)->where('return_reasion','=',null)->first();
+                  @endphp
+                 @if($order)
+                  <form method="post" action="{{route('return.order',$orders->id)}}">
+                     @csrf
+                     <div class="form-group">
+                        <label for="">Order Return Reason</label>
+                        <textarea col="30" rows="5" class="form-control" name="return_reason" placeholder="Order Return Reason"></textarea>
+                     </div>
+                     <div class="form-group">
+                        <input type="submit" name="Submit" class="btn btn-primary" value="Cancel Order">
+                     </div>
+                  </form>
+                  @else
+                    <span class="badge badge-pill badge-warning" style="background:red">You Have send return request for this product</span>
+                  @endif
+                @endif
               </div>
 
 

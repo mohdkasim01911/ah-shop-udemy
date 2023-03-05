@@ -46,4 +46,30 @@ class AllUserController extends Controller
     return $pdf->download('invoice.pdf');
 
     }
+
+
+    public function returnOrder(Request $request, $id){
+
+       $orders = Order::findOrFail($id)->update([
+             'return_date' => Carbon::now()->format('d F Y'),
+             'return_reasion' => $request->return_reason,
+         ]);
+
+        $notification = [
+         
+           'message' => 'Return Request Send Successfully',
+           'alert-type' => 'success'
+        ];
+
+        return redirect()->route('my.orders')->with($notification);
+
+    }
+
+    public function returnOrderList(){
+
+      $orders = Order::where('user_id',Auth::id())->where('return_reasion','!=',null)->get();
+
+      return view('front.order.return_order_details',compact('orders'));
+
+    }
 }

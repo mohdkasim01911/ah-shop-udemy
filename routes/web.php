@@ -210,8 +210,6 @@ route::get('brand/delete/{id}',[BrandController::class,'delete_brand'])->name('a
 
       route::get('shipped-delivered/{id}',[OrderController::class,'shippedTodelivered'])->name('shipped.delivered');
 
-
-
   });
 
 });
@@ -257,6 +255,12 @@ route::post('/stripe/order',[StripeController::class,'stripeOrder'])->name('stri
 route::get('/my/order',[AllUserController::class,'MyOrder'])->name('my.orders');
 route::get('/order-details/{id}',[AllUserController::class,'OrderDetails']);
 route::get('/invoice-download/{id}',[AllUserController::class,'invoiceDownload']);
+
+route::post('return-order/{id}',[AllUserController::class,'returnOrder'])->name('return.order');
+
+route::get('return-order-list',[AllUserController::class,'returnOrderList'])->name('retun.orders.list');
+
+route::get('cancel-orders-list',[AllUserController::class,'returnOrderList'])->name('cancel.orders.list');
 
 });
 
